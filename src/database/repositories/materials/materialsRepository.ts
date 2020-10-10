@@ -8,7 +8,7 @@ export default class MaterialsRepository{
 
         const workforces = await options.database.materials.create({
             ...lodash.pick(data,[
-                'tool_name',
+                'material_name',
                 'number',                
             ])
         },{
