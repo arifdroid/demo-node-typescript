@@ -15,6 +15,10 @@ const routes = express.Router();
 
 require('./user').default(routes);
 require('./site_logs').default(routes);
+require('./workforces').default(routes);
+require('./tools').default(routes);
+require('./materials').default(routes);
+
 
 app.use('/api', routes);
 
