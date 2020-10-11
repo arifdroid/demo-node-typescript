@@ -1,9 +1,10 @@
-import yenv from 'yenv';
+require('dotenv').config();
 import api from './api';
 
 
-const env = yenv('env.yaml',{env:'development'});
+// const env = yenv('env.yaml',{env:'development'});
+const PORT = process.env.PORT;
 
-api.listen(env.PORT, ()=>{
-    console.log(`\n listening on port : ${env.PORT}\n`);
+api.listen(PORT, ()=>{
+    console.log(`\n listening on port : ${PORT}\n`);
 });
