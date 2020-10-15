@@ -32,6 +32,11 @@ export default class SiteLogsRepository {
                         'tool_name',
                         'number'
                     ])
+                },{
+                    ...lodash.pick(data.tools[1], [
+                        'tool_name',
+                        'number'
+                    ])
                 }]
 
             }, {
