@@ -35,21 +35,21 @@ export default class WorkforceService{
 
     async list_all(){
 
-        const transaction = await SequelizeRepository.createTransaction(this.options.database);   
+        
 
         try {
 
             const record = await WorkforcesRepository.list_all({
-                ...this.options, transaction
+                ...this.options, 
             })
 
-            await SequelizeRepository.commitTransaction(transaction);
+            
 
             return record;
             
         } catch (error) {
 
-            await SequelizeRepository.rollbackTransaction(transaction);
+            
 
             throw error;
             

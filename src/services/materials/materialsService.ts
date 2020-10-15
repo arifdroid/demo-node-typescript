@@ -32,19 +32,19 @@ export default class MaterialsService{
 
     async list_all(){
 
-        const transaction = SequelizeRepository.createTransaction(this.options.database);
+        
 
         try {
 
             const site_logs_list = await MaterialsRepository.list_all({
-                ...this.options, transaction
+                ...this.options, 
             });
             
             return site_logs_list;
             
         } catch (error) {
             
-            await SequelizeRepository.rollbackTransaction(transaction);
+            
             throw error;
         }
 

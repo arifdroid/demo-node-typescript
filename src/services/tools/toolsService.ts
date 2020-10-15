@@ -33,19 +33,18 @@ export default class ToolsService{
 
     async list_all(){
 
-        const transaction = SequelizeRepository.createTransaction(this.options.database);
-
+        
         try {
 
             const site_logs_list = await ToolsRepository.list_all({
-                ...this.options, transaction
+                ...this.options, 
             });
             
             return site_logs_list;
             
         } catch (error) {
             
-            await SequelizeRepository.rollbackTransaction(transaction);
+            
             throw error;
         }
 

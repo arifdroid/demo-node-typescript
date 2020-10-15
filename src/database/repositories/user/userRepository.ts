@@ -31,7 +31,7 @@ export default class UserRepository {
 
     static async list_all(options: any) {
 
-        const transaction = await SequelizeRepository.getTransaction(options);
+        
 
         const user = await options.database.users.findAll(
             {
@@ -39,7 +39,7 @@ export default class UserRepository {
             }
             ,
             {
-                transaction,
+                // transaction,
             },
         );
 

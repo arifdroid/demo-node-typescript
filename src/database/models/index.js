@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config();
 // import yenv from 'yenv';
 // const yenv = require('yenv');
 // const config = yenv('env.yaml', { env: 'development' });
@@ -17,7 +17,7 @@ let sequelize;
 if (config) {
   // sequelize = new Sequelize(process.env[config.use_env_variable], config);
   // console.log('\n\nconfig datase username ->',process.env.DATABASE_USERNAME,'\n\n')
-  console.log('\n\nconfig datase connected -> ',config,'\n\n')
+  console.log('\n\nconfig datase connected -> ',config.DATABASE_DIALECT,'\n\n')
   sequelize = new Sequelize(config.DATABASE_DATABASE, config.DATABASE_USERNAME, config.DATABASE_PASSWORD, {
     host: config.DATABASE_HOST,
     dialect: config.DATABASE_DIALECT

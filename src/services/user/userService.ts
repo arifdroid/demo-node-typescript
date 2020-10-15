@@ -34,21 +34,19 @@ export default class UserService{
 
     async list_all(){
 
-        const transaction = await SequelizeRepository.createTransaction(this.options.database);   
-
         try {
 
             const record = await UserRepository.list_all({
-                ...this.options, transaction
+                ...this.options, 
             })
 
-            await SequelizeRepository.commitTransaction(transaction);
+            
 
             return record;
             
         } catch (error) {
 
-            await SequelizeRepository.rollbackTransaction(transaction);
+            
 
             throw error;
             

@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      tools.belongsTo(models.site_logs,{
+        as:'site_logs',
+        foreignKey:'siteLogsId'
+      })
     }
   };
   tools.init({

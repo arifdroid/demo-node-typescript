@@ -9,7 +9,7 @@ export default class SiteLogsRepository {
 
         const site_logs = await options.database.site_logs.create(
             {
-                ...lodash.pick(data,[
+                ...lodash.pick(data, [
                     'project_name',
                     'location',
                     'contractor',
@@ -26,10 +26,20 @@ export default class SiteLogsRepository {
                     'site_supervisor_comment',
                     'status',
                     'date'
-                ])
+                ]),
+                tools: [{
+                    ...lodash.pick(data.tools[0], [
+                        'tool_name',
+                        'number'
+                    ])
+                }]
 
             }, {
-            transaction
+            transaction,
+            include: [{
+                model: options.database.tools,
+                as: 'tools'
+            }]
         })
 
         // console.log('\n\n ===== site log create')
@@ -41,12 +51,29 @@ export default class SiteLogsRepository {
     }
 
 
-    static async list_all(options: any){
+    static async list_all(options: any) {
 
-        const transaction = await SequelizeRepository.getTransaction(options);
+        // const transaction = await SequelizeRepository.getTransaction(options);
 
-        const site_logs_list = await options.database.site_logs.findAll({},{
-            transaction
+        // const site_logs_list = await options.database.site_logs.findAll({}, {
+        //     // include:[options.database.workforces]
+        //     include: [{
+        //         as: 'site_logs',
+        //         model: options.database.tools,
+                
+        //     }]
+        //     // transaction
+        // });
+
+
+        const site_logs_list = await options.database.site_logs.findAll( {
+            // include:[options.database.workforces]
+            include: [{
+                as: 'tools',
+                model: options.database.tools,
+                
+            }]
+            // transaction
         });
 
         return site_logs_list;

@@ -18,11 +18,6 @@ export default class Site_LogsService{
                 ...this.options, transaction
             })
 
-            // console.log('\n\n ===== site log create record')
-
-            // console.log('\n record -> ', record)
-            // console.log('====\n\n')
-
             await SequelizeRepository.commitTransaction(transaction);
 
             return record;
@@ -38,19 +33,18 @@ export default class Site_LogsService{
 
     async list_all(){
 
-        const transaction = SequelizeRepository.createTransaction(this.options.database);
-
         try {
 
             const site_logs_list = await SiteLogsRepository.list_all({
-                ...this.options, transaction
+                ...this.options, 
+       
             });
             
             return site_logs_list;
             
         } catch (error) {
             
-            await SequelizeRepository.rollbackTransaction(transaction);
+       
             throw error;
         }
 
