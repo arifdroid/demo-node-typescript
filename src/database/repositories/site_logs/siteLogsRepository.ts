@@ -27,29 +27,26 @@ export default class SiteLogsRepository {
                     'status',
                     'date'
                 ]),
-                tools: [{
-                    ...lodash.pick(data.tools[0], [
-                        'tool_name',
-                        'number'
-                    ])
-                },{
-                    ...lodash.pick(data.tools[1], [
-                        'tool_name',
-                        'number'
-                    ])
-                }]
+              
+                tools: data.tools,
+                workforces:data.workforces,
+
+            
 
             }, {
             transaction,
             include: [{
                 model: options.database.tools,
                 as: 'tools'
+            },{
+                model:options.database.workforces,
+                as:'workforces'
             }]
         })
 
         // console.log('\n\n ===== site log create')
 
-        // console.log('\n site_logs -> ', site_logs)
+        // console.log('\n data.tools -> ', data.tools)
         // console.log('====\n\n')
 
         return site_logs;
@@ -77,6 +74,9 @@ export default class SiteLogsRepository {
                 as: 'tools',
                 model: options.database.tools,
                 
+            },{
+                as:'workforces',
+                model:options.database.workforces
             }]
             // transaction
         });

@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   workforces.init({
     sub_con_name: DataTypes.STRING,
-    ehtnicity: DataTypes.STRING,
+    ethnicity: DataTypes.STRING,
     number: DataTypes.INTEGER,
   }, {
     sequelize,
