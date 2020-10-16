@@ -14,20 +14,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      site_logs.hasMany(models.workforces,{
-          // foreignKey:'site_log_id'
+      site_logs.hasMany(models.workforces,{          
           as:'workforces',
           foreignKey:'siteLogsId'
       })
       
-      site_logs.hasMany(models.tools,{
-          // foreignKey:'tools_site_log_id'
+      site_logs.hasMany(models.tools,{          
           as:'tools',
           foreignKey:'siteLogsId'
       })
 
       site_logs.hasMany(models.materials,{
-          foreignKey:'materials_log_id'
+          as:'materials',
+          foreignKey:'siteLogsId'
       })
     }
   };

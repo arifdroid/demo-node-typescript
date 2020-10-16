@@ -30,6 +30,7 @@ export default class SiteLogsRepository {
               
                 tools: data.tools,
                 workforces:data.workforces,
+                materials: data.materials
 
             
 
@@ -41,13 +42,11 @@ export default class SiteLogsRepository {
             },{
                 model:options.database.workforces,
                 as:'workforces'
+            },{
+                model:options.database.materials,
+                as:'materials'
             }]
         })
-
-        // console.log('\n\n ===== site log create')
-
-        // console.log('\n data.tools -> ', data.tools)
-        // console.log('====\n\n')
 
         return site_logs;
     }
@@ -55,21 +54,8 @@ export default class SiteLogsRepository {
 
     static async list_all(options: any) {
 
-        // const transaction = await SequelizeRepository.getTransaction(options);
-
-        // const site_logs_list = await options.database.site_logs.findAll({}, {
-        //     // include:[options.database.workforces]
-        //     include: [{
-        //         as: 'site_logs',
-        //         model: options.database.tools,
-                
-        //     }]
-        //     // transaction
-        // });
-
-
-        const site_logs_list = await options.database.site_logs.findAll( {
-            // include:[options.database.workforces]
+        const site_logs_list = await options.database.site_logs.findAll( {            
+            
             include: [{
                 as: 'tools',
                 model: options.database.tools,
@@ -77,8 +63,11 @@ export default class SiteLogsRepository {
             },{
                 as:'workforces',
                 model:options.database.workforces
+            },{
+                as:'materials',
+                model:options.database.materials
             }]
-            // transaction
+            
         });
 
         return site_logs_list;
