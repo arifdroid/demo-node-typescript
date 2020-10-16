@@ -4,10 +4,8 @@ import ApiResponseHandler from '../apiResponseHandler';
 export default async (req: any, res: any, next:any) => {
     try {
 
-        // const {phone, pwd} = req.body;
-
         const payload = await AuthServices.signUp(
-            req.body,
+            req.body.data,
             req
         )
         await ApiResponseHandler.success(req, res, payload);

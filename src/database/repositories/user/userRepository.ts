@@ -52,7 +52,7 @@ export default class UserRepository {
     static async findByPhone(phone: any, options: any) {
         return await options.database.users.findOne(
             {
-                where: {phone}
+                where: {phone:phone}
             });
     }
 

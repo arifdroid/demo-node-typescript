@@ -15,6 +15,8 @@ export default class AuthServices {
 
         try {
             const { name, position, company, email, phone, pwd } = data;
+
+            console.log(' log phone', phone)
             const existingUser = await UserRepository.findByPhone(phone,
                 options
             );
