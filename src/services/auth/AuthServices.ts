@@ -106,4 +106,35 @@ export default class AuthServices {
 
         }
     }
+
+    static async findByToken(token : any, options: any){
+        return new Promise((resolve,reject)=>{
+
+            jwt.verify(
+                token,
+                getConfig().AUTH_JWT_SECRET,
+                (err :any,decoded : any)=>{
+                    if(err){
+                        reject(err);
+                        return;
+                    }
+
+                    let id = decoded.id.split('_')[0];
+                    let phone = decoded.id.split('_')[1];
+
+                    UserRepository.findByIDandPhone(id,phone, options).then(
+                        (user)=>{
+
+                            console.log()
+                            resolve(user);
+                        }
+                    ).catch(e=>reject(e))
+
+                    
+                 
+
+                }
+            )
+        })
+    }
 }

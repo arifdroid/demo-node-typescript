@@ -2,11 +2,12 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import databaseMiddleWare from '../middlewares/databaseMiddlewares';
+import { authMiddleware } from '../middlewares/authMiddlewares';
 
 const app = express();
 app.use(cors({origin:true}));
 app.use(databaseMiddleWare);
-
+app.use(authMiddleware);
 // console.log('database middleware', databaseMiddleWare)
 app.use(helmet());
 app.use(express.json());

@@ -1,5 +1,6 @@
 import SequelizeRepository from "../sequelizeRepository";
 import lodash from 'lodash';
+import { Op } from 'sequelize';
 
 export default class UserRepository {
 
@@ -64,5 +65,19 @@ export default class UserRepository {
             });
 
         return user.hashed_password    
+    }
+
+    static async findByIDandPhone(id: any, phone:any, options: any) {
+        let user =  await options.database.users.findOne(
+            {
+                where: {
+                    [Op.and]:{
+                        id,
+                        phone
+                    }
+                }
+            });
+
+        return user    
     }
 }
