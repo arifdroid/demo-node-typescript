@@ -4,7 +4,7 @@ import AuthServices from "../services/auth/AuthServices";
 export async function authMiddleware(req:any,res:any,next:any){
    
     if(getConfig().QUERY_API_KEY === req.query.api_key){
-        if((getConfig().AUTH_CHECK_1 == req.path || getConfig().AUTH_CHECK_2 == req.path)&& req.method === 'POST'){
+        if((getConfig().AUTH_CHECK_1 == req.path || getConfig().AUTH_CHECK_2 == req.path || getConfig().AUTH_CHECK_3)&& req.method === 'POST'){
             return next();
         }else{
            

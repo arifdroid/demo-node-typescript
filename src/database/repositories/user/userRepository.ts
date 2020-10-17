@@ -1,5 +1,5 @@
 import SequelizeRepository from "../sequelizeRepository";
-import lodash from 'lodash';
+import lodash, { constant } from 'lodash';
 import { Op } from 'sequelize';
 
 export default class UserRepository {
@@ -21,6 +21,30 @@ export default class UserRepository {
             }
             ,
             {
+                transaction,
+            },
+        );
+
+
+
+        return user;
+
+    }
+
+    static async updatePassword(data: any, options: any) {
+
+        const transaction = await SequelizeRepository.getTransaction(options);
+
+        const user = await options.database.users.update(
+            {
+                'hashed_password': data.hashed_password,
+
+            }
+            ,
+            {
+                where: {
+                    phone: data.phone
+                },
                 transaction,
             },
         );
@@ -53,31 +77,31 @@ export default class UserRepository {
     static async findByPhone(phone: any, options: any) {
         return await options.database.users.findOne(
             {
-                where: {phone:phone}
+                where: { phone: phone }
             });
     }
 
 
     static async findPassword(id: any, options: any) {
-        let user =  await options.database.users.findOne(
+        let user = await options.database.users.findOne(
             {
-                where: {id}
+                where: { id }
             });
 
-        return user.hashed_password    
+        return user.hashed_password
     }
 
-    static async findByIDandPhone(id: any, phone:any, options: any) {
-        let user =  await options.database.users.findOne(
+    static async findByIDandPhone(id: any, phone: any, options: any) {
+        let user = await options.database.users.findOne(
             {
                 where: {
-                    [Op.and]:{
+                    [Op.and]: {
                         id,
                         phone
                     }
                 }
             });
 
-        return user    
+        return user
     }
 }

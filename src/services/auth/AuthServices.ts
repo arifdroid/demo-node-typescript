@@ -107,14 +107,14 @@ export default class AuthServices {
         }
     }
 
-    static async findByToken(token : any, options: any){
-        return new Promise((resolve,reject)=>{
+    static async findByToken(token: any, options: any) {
+        return new Promise((resolve, reject) => {
 
             jwt.verify(
                 token,
                 getConfig().AUTH_JWT_SECRET,
-                (err :any,decoded : any)=>{
-                    if(err){
+                (err: any, decoded: any) => {
+                    if (err) {
                         reject(err);
                         return;
                     }
@@ -122,19 +122,69 @@ export default class AuthServices {
                     let id = decoded.id.split('_')[0];
                     let phone = decoded.id.split('_')[1];
 
-                    UserRepository.findByIDandPhone(id,phone, options).then(
-                        (user)=>{
+                    UserRepository.findByIDandPhone(id, phone, options).then(
+                        (user) => {
 
                             console.log()
                             resolve(user);
                         }
-                    ).catch(e=>reject(e))
+                    ).catch(e => reject(e))
 
-                    
-                 
+
+
 
                 }
             )
         })
+    }
+
+    static async passwordReset(body: any, options: any) {
+
+        // console.log('checking -->', body)
+
+        const transaction = await SequelizeRepository.createTransaction(options.database);
+
+        const { phone, pwd } = body.data;
+
+        const hashed_password = await bcrypt.hash(pwd, BCRYPT_SALT_ROUNDS);
+
+        let data = {phone, hashed_password }
+
+        
+
+        const existingUser = await UserRepository.findByPhone(phone,
+            options
+        );
+
+        if (existingUser) {
+
+            try {
+
+                
+                await UserRepository.updatePassword(data, {
+                    ...options, transaction
+                });
+
+                const token = jwt.sign(
+                    { id: `${existingUser.id}_${existingUser.phone}` },
+                    getConfig().AUTH_JWT_SECRET,
+                    { expiresIn: getConfig().AUTH_JWT_EXPIRES_IN },
+                );
+
+                await SequelizeRepository.commitTransaction(
+                    transaction,
+                );
+
+                return token;
+            } catch (error) {
+                await SequelizeRepository.rollbackTransaction(transaction);
+                throw new Error400('password update fail');
+            }
+
+
+        } else {
+            throw new Error400('user not existed');
+        }
+
     }
 }
