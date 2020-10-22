@@ -32,12 +32,12 @@ export default class AuthServices {
 
                 let data = { name, position, company, email, phone, hashed_password }
 
-                const newUser = await UserRepository.create(data, {
+                const user = await UserRepository.create(data, {
                     ...options, transaction
                 });
 
                 const token = jwt.sign(
-                    { id: `${newUser.id}_${newUser.phone}` },
+                    { id: `${user.id}_${user.phone}` },
                     getConfig().AUTH_JWT_SECRET,
                     { expiresIn: getConfig().AUTH_JWT_EXPIRES_IN },
                 );
@@ -46,7 +46,7 @@ export default class AuthServices {
                     transaction,
                 );
 
-                return token
+                return {token, user}
             }
 
 
@@ -94,7 +94,7 @@ export default class AuthServices {
                 transaction,
             );
 
-            return token;
+            return {token,user};
 
         } catch (error) {
 

@@ -4,6 +4,8 @@ import ApiResponseHandler from "../apiResponseHandler";
 export default async(req: any, res :any, next: any )=>{
     try {
 
+        // console.log('req,', req.body)
+
         const payload = await new Site_LogsService(req).list_all();
 
         await ApiResponseHandler.success(req,res,payload);

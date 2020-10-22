@@ -8,7 +8,6 @@ const app = express();
 app.use(cors({origin:true}));
 app.use(databaseMiddleWare);
 app.use(authMiddleware);
-// console.log('database middleware', databaseMiddleWare)
 app.use(helmet());
 app.use(express.json());
 

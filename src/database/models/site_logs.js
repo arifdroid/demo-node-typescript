@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
           as:'materials',
           foreignKey:'siteLogsId'
       })
+
+      site_logs.belongsTo(models.users,{
+        foreignKey:'user_id'
+      })
     }
   };
   site_logs.init({
