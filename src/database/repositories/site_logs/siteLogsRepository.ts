@@ -70,17 +70,17 @@ export default class SiteLogsRepository {
             where:{
                 user_id
             },
-            include: [{
-                as: 'tools',
-                model: options.database.tools,
+            // include: [{
+            //     as: 'tools',
+            //     model: options.database.tools,
                 
-            },{
-                as:'workforces',
-                model:options.database.workforces
-            },{
-                as:'materials',
-                model:options.database.materials
-            }]
+            // },{
+            //     as:'workforces',
+            //     model:options.database.workforces
+            // },{
+            //     as:'materials',
+            //     model:options.database.materials
+            // }]
             
         });
 
