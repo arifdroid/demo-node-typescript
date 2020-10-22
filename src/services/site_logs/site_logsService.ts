@@ -49,6 +49,25 @@ export default class Site_LogsService{
         }
 
     }
+
+    async findOne(id: any){
+
+        try {
+
+            const site_logs_data = await SiteLogsRepository.findOne(id, {
+                ...this.options, 
+       
+            });
+            
+            return site_logs_data;
+            
+        } catch (error) {
+            
+       
+            throw error;
+        }
+
+    }
     
 
     

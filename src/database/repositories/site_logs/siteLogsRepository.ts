@@ -87,5 +87,28 @@ export default class SiteLogsRepository {
         return site_logs_list;
     }
 
+    static async findOne(id : any, options: any) {
+
+        const site_logs_list = await options.database.site_logs.findOne( {            
+            where:{
+                id
+            },
+            include: [{
+                as: 'tools',
+                model: options.database.tools,
+                
+            },{
+                as:'workforces',
+                model:options.database.workforces
+            },{
+                as:'materials',
+                model:options.database.materials
+            }]
+            
+        });
+
+        return site_logs_list;
+    }
+
 
 }
